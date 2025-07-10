@@ -1,184 +1,256 @@
-# Stello Business Management System
+# Stello - Complete Business Management System
 
-A comprehensive business management solution with two main applications: **POS (Point of Sale)** and **Manager (Business Management Dashboard)**.
+A comprehensive business management system with Point of Sale (POS) and Manager applications, integrated with a powerful backend API for inventory management and transaction processing.
 
-## Project Structure
+## 🏗️ Architecture
 
 ```
 Stello/
-├── pos/                    # Point of Sale Application
-│   ├── src/
-│   │   ├── components/     # POS React components
-│   │   ├── App.jsx        # Main POS app
-│   │   └── index.js       # POS entry point
-│   ├── public/            # POS public assets
-│   ├── package.json       # POS dependencies
-│   └── README.md          # POS documentation
-├── manager/               # Business Management Dashboard
-│   ├── src/
-│   │   ├── components/    # Manager React components
-│   │   ├── contexts/      # React contexts
-│   │   ├── pages/         # Manager pages
-│   │   ├── utils/         # Utility functions
-│   │   ├── App.jsx        # Main manager app
-│   │   └── index.js       # Manager entry point
-│   ├── public/            # Manager public assets
-│   ├── package.json       # Manager dependencies
-│   └── README.md          # Manager documentation
-└── README.md              # This file
+├── backend/          # Node.js/Express API server
+├── manager/          # React Manager Dashboard (Port 3001)
+├── pos/             # React POS System (Port 3000)
+├── start.bat        # Windows startup script
+└── start.sh         # Unix startup script
 ```
 
-## Applications
-
-### 1. POS (Point of Sale)
-**Location**: `pos/`
-
-A modern point of sale system for retail operations.
-
-**Features**:
-- User authentication (email/password or access code)
-- Product search and catalog management
-- Real-time cart and checkout functionality
-- Transaction history and receipt printing
-- User profile and POS settings
-- Responsive design for desktop and mobile
-
-**Technologies**:
-- React 18
-- Tailwind CSS
-- Font Awesome icons
-
-**Quick Start**:
-```bash
-cd pos
-npm install
-npm start
-```
-
-### 2. Manager (Business Management Dashboard)
-**Location**: `manager/`
-
-A comprehensive business management dashboard with AI-powered features.
-
-**Features**:
-- Dashboard with business analytics
-- Inventory management
-- Sales tracking and reporting
-- Team management
-- AI-powered assistant and analytics
-- Smart product categorization
-- Settings and notifications
-
-**Technologies**:
-- React 18
-- Tailwind CSS
-- AI integration features
-
-**Quick Start**:
-```bash
-cd manager
-npm install
-npm start
-```
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (version 14 or higher)
+- Node.js (v14 or higher)
+- MongoDB (local or Atlas)
 - npm or yarn
 
 ### Installation
 
-1. **Clone the repository**:
+1. **Clone and setup backend**
    ```bash
-   git clone <repository-url>
-   cd Stello
+   cd backend
+   npm install
+   cp env.example .env
+   # Edit .env with your MongoDB connection
+   npm run dev
    ```
 
-2. **Install POS dependencies**:
+2. **Setup Manager App**
+   ```bash
+   cd manager
+   npm install
+   npm start
+   ```
+
+3. **Setup POS App**
    ```bash
    cd pos
    npm install
+   npm start
    ```
 
-3. **Install Manager dependencies**:
-   ```bash
-   cd ../manager
-   npm install
-   ```
+### Using Startup Scripts
 
-### Running the Applications
-
-**POS Application**:
+**Windows:**
 ```bash
-cd pos
-npm start
-# Open http://localhost:3000
+start.bat
 ```
 
-**Manager Application**:
+**Unix/Mac:**
 ```bash
-cd manager
-npm start
-# Open http://localhost:3001 (or next available port)
+./start.sh
 ```
 
-## Development
+## 📱 Applications
 
-### POS Development
-- Navigate to `pos/` directory
-- Run `npm start` for development
-- Run `npm run build` for production build
+### 🛒 POS System (Port 3000)
+- **Real-time Sales Processing**: Scan barcodes, search products, process payments
+- **Inventory Integration**: Automatic stock updates on sales
+- **Customer Management**: Track customer information and loyalty
+- **Receipt Generation**: Print or email receipts
+- **Returns & Refunds**: Process returns with automatic stock restoration
 
-### Manager Development
-- Navigate to `manager/` directory
-- Run `npm start` for development
-- Run `npm run build` for production build
+### 📊 Manager Dashboard (Port 3001)
+- **Inventory Management**: Add, edit, and manage products
+- **CSV Import/Export**: Bulk product management
+- **Sales Analytics**: Real-time sales reports and trends
+- **User Management**: Manage staff accounts and permissions
+- **Stock Alerts**: Low stock notifications and reorder suggestions
+- **AI Features**: Smart product categorization and analytics
 
-## Features Overview
+### 🔧 Backend API (Port 5000)
+- **Authentication**: JWT-based security with role-based access
+- **Database Management**: MongoDB with Mongoose ODM
+- **Transaction Processing**: Sales, returns, and inventory updates
+- **CSV Processing**: Bulk import/export functionality
+- **Reporting**: Comprehensive analytics and reporting APIs
+
+## 🔄 Data Flow
+
+### Sales Process
+1. **POS** → Searches products via API
+2. **API** → Validates stock availability
+3. **POS** → Creates sale transaction
+4. **API** → Updates inventory automatically
+5. **Manager** → Views updated inventory and sales reports
+
+### Inventory Management
+1. **Manager** → Uploads CSV with new products
+2. **API** → Processes and validates data
+3. **Database** → Updates product catalog
+4. **POS** → Immediately sees new products
+5. **Manager** → Monitors stock levels and sales
+
+## 🛠️ Features
 
 ### POS System
-- **Authentication**: Secure login with multiple options
-- **Product Management**: Search, filter, and manage inventory
-- **Sales Processing**: Add items to cart, process payments
-- **Transaction History**: View and manage past sales
-- **User Management**: Profile settings and preferences
+- ✅ Product search by name, SKU, or barcode
+- ✅ Real-time stock validation
+- ✅ Multiple payment methods
+- ✅ Customer information capture
+- ✅ Receipt generation
+- ✅ Returns and refunds
+- ✅ Transaction history
+- ✅ User authentication
 
 ### Manager Dashboard
-- **Business Analytics**: Real-time business metrics
-- **Inventory Management**: Stock tracking and alerts
-- **Sales Management**: Sales reports and analytics
-- **Team Management**: Staff and role management
-- **AI Features**: 
-  - AI Assistant for business insights
-  - AI Analytics for predictions
-  - Smart Product Categorization
-- **Settings**: System configuration and preferences
+- ✅ Product CRUD operations
+- ✅ CSV import/export
+- ✅ Inventory reports
+- ✅ Sales analytics
+- ✅ User management
+- ✅ Stock alerts
+- ✅ AI-powered insights
+- ✅ Role-based permissions
 
-## Architecture
+### Backend API
+- ✅ RESTful API design
+- ✅ JWT authentication
+- ✅ Role-based authorization
+- ✅ Input validation
+- ✅ Error handling
+- ✅ Rate limiting
+- ✅ CORS protection
+- ✅ MongoDB integration
 
-Both applications follow modern React patterns:
-- **Component-based architecture**
-- **Hooks for state management**
-- **Context API for global state**
-- **Responsive design with Tailwind CSS**
-- **Modular component structure**
+## 📊 Database Schema
 
-## Contributing
+### Products
+```javascript
+{
+  name: String,
+  sku: String (unique),
+  barcode: String,
+  price: Number,
+  cost: Number,
+  stock: Number,
+  minStock: Number,
+  category: String,
+  supplier: Object,
+  status: String
+}
+```
+
+### Transactions
+```javascript
+{
+  transactionId: String,
+  type: String (sale/return),
+  items: Array,
+  total: Number,
+  paymentMethod: String,
+  customer: Object,
+  cashier: ObjectId
+}
+```
+
+### Users
+```javascript
+{
+  name: String,
+  email: String,
+  role: String,
+  permissions: Object,
+  isActive: Boolean
+}
+```
+
+## 🔐 Security
+
+- **JWT Authentication**: Secure token-based authentication
+- **Password Hashing**: bcrypt for password security
+- **Role-based Access**: Granular permissions system
+- **Input Validation**: Comprehensive data validation
+- **Rate Limiting**: Protection against abuse
+- **CORS Protection**: Secure cross-origin requests
+
+## 📈 CSV Integration
+
+### Import Format
+```csv
+name,sku,price,cost,stock,category,description
+Premium Headphones,HP-1001,199.99,120.00,24,Electronics,High-quality wireless headphones
+```
+
+### Export Features
+- Product catalog export
+- Sales reports export
+- Inventory reports export
+- Custom date range exports
+
+## 🚀 Deployment
+
+### Development
+```bash
+# Backend
+cd backend && npm run dev
+
+# Manager
+cd manager && npm start
+
+# POS
+cd pos && npm start
+```
+
+### Production
+```bash
+# Backend
+cd backend && npm start
+
+# Manager
+cd manager && npm run build
+# Serve build folder
+
+# POS
+cd pos && npm run build
+# Serve build folder
+```
+
+## 📝 Environment Variables
+
+### Backend (.env)
+```env
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/stello
+JWT_SECRET=your-secret-key
+NODE_ENV=production
+```
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch for your changes
-3. Make your changes in the appropriate application directory
+2. Create a feature branch
+3. Make your changes
 4. Test thoroughly
 5. Submit a pull request
 
-## License
+## 📄 License
 
-This project is part of the Stello business management system.
+MIT License - see LICENSE file for details
 
-## Support
+## 🆘 Support
 
-For support or questions:
-- Check the individual README files in `pos/` and `manager/` directories
-- Review the component documentation
-- Test both applications thoroughly before deployment 
+For support and questions:
+- Check the documentation in each app's README
+- Review the API documentation in `backend/README.md`
+- Open an issue for bugs or feature requests
+
+---
+
+**Stello** - Complete Business Management System 
