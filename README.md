@@ -1,195 +1,184 @@
-# Stello - Inventory Management System
+# Stello Business Management System
 
-A modern, professional React-based inventory management system with a beautiful UI and comprehensive features.
-
-## Features
-
-- **Dashboard**: Overview with key metrics, sales performance charts, and recent activities
-- **Inventory Management**: Product catalog with filtering, sorting, and bulk operations
-- **Sales Tracking**: Sales history, order management, and performance analytics
-- **Team Management**: User roles, permissions, and collaboration tools
-- **Settings**: Store configuration, subscription management, and data export
-- **Authentication**: Secure login system with session management
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-
-## Tech Stack
-
-- **React 18** - Modern React with hooks and functional components
-- **React Router 6** - Client-side routing
-- **Tailwind CSS** - Utility-first CSS framework
-- **Lucide React** - Beautiful, customizable icons
-- **Context API** - State management for authentication
-- **Custom Hooks** - Reusable logic and state management
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 16+ 
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd stello-inventory
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Start the development server:
-```bash
-npm start
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-This creates an optimized production build in the `build` folder.
+A comprehensive business management solution with two main applications: **POS (Point of Sale)** and **Manager (Business Management Dashboard)**.
 
 ## Project Structure
 
 ```
-src/
-├── components/
-│   ├── auth/
-│   │   └── LoginForm.jsx
-│   ├── layout/
-│   │   ├── Header.jsx
-│   │   └── Sidebar.jsx
-│   └── ui/
-│       ├── Button.jsx
-│       ├── Input.jsx
-│       └── Modal.jsx
-├── contexts/
-│   └── AuthContext.js
-├── pages/
-│   ├── Dashboard.jsx
-│   ├── Inventory.jsx
-│   ├── Sales.jsx
-│   ├── Settings.jsx
-│   └── Team.jsx
-├── utils/
-│   └── cn.js
-├── App.jsx
-├── index.js
-└── index.css
+Stello/
+├── pos/                    # Point of Sale Application
+│   ├── src/
+│   │   ├── components/     # POS React components
+│   │   ├── App.jsx        # Main POS app
+│   │   └── index.js       # POS entry point
+│   ├── public/            # POS public assets
+│   ├── package.json       # POS dependencies
+│   └── README.md          # POS documentation
+├── manager/               # Business Management Dashboard
+│   ├── src/
+│   │   ├── components/    # Manager React components
+│   │   ├── contexts/      # React contexts
+│   │   ├── pages/         # Manager pages
+│   │   ├── utils/         # Utility functions
+│   │   ├── App.jsx        # Main manager app
+│   │   └── index.js       # Manager entry point
+│   ├── public/            # Manager public assets
+│   ├── package.json       # Manager dependencies
+│   └── README.md          # Manager documentation
+└── README.md              # This file
 ```
 
-## Key Components
+## Applications
 
-### Authentication
-- **LoginForm**: Professional login interface with validation
-- **AuthContext**: Manages authentication state across the app
-- **ProtectedRoute**: Guards routes requiring authentication
+### 1. POS (Point of Sale)
+**Location**: `pos/`
 
-### Layout Components
-- **Sidebar**: Collapsible navigation with user profile
-- **Header**: Top navigation with notifications and user menu
+A modern point of sale system for retail operations.
 
-### UI Components
-- **Button**: Reusable button with multiple variants and sizes
-- **Input**: Form input with error handling and styling
-- **Modal**: Reusable modal component with backdrop
+**Features**:
+- User authentication (email/password or access code)
+- Product search and catalog management
+- Real-time cart and checkout functionality
+- Transaction history and receipt printing
+- User profile and POS settings
+- Responsive design for desktop and mobile
 
-### Pages
-- **Dashboard**: Overview with metrics and charts
-- **Inventory**: Product management with filtering and search
-- **Sales**: Sales tracking and order management
-- **Team**: User management and role assignment
-- **Settings**: Configuration and data export
+**Technologies**:
+- React 18
+- Tailwind CSS
+- Font Awesome icons
 
-## Styling
+**Quick Start**:
+```bash
+cd pos
+npm install
+npm start
+```
 
-The application uses Tailwind CSS with custom configurations:
+### 2. Manager (Business Management Dashboard)
+**Location**: `manager/`
 
-- **Custom Colors**: Primary, secondary, accent, and semantic colors
-- **Custom Components**: Glass cards, buttons, and form elements
-- **Responsive Design**: Mobile-first approach with breakpoints
-- **Animations**: Smooth transitions and hover effects
+A comprehensive business management dashboard with AI-powered features.
 
-## Features in Detail
+**Features**:
+- Dashboard with business analytics
+- Inventory management
+- Sales tracking and reporting
+- Team management
+- AI-powered assistant and analytics
+- Smart product categorization
+- Settings and notifications
 
-### Dashboard
-- Summary cards with key metrics
-- Sales performance charts
-- Recent activity feed
-- Low stock alerts
-- Quick action buttons
+**Technologies**:
+- React 18
+- Tailwind CSS
+- AI integration features
 
-### Inventory Management
-- Product catalog with images and details
-- Advanced filtering and search
-- Stock level tracking
-- Cost and profit calculations
-- Bulk operations support
+**Quick Start**:
+```bash
+cd manager
+npm install
+npm start
+```
 
-### Sales Tracking
-- Order history and details
-- Sales performance analytics
-- Customer information
-- Payment status tracking
-- Export capabilities
+## Getting Started
 
-### Team Management
-- User role assignment
-- Permission-based access
-- Team member invitations
-- Activity tracking
-- Profile management
+### Prerequisites
+- Node.js (version 14 or higher)
+- npm or yarn
 
-### Settings
-- Store information configuration
-- Subscription management
-- Data export options
-- Security settings
-- Business preferences
+### Installation
 
-## Customization
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd Stello
+   ```
 
-### Adding New Pages
-1. Create a new component in `src/pages/`
-2. Add the route in `src/App.jsx`
-3. Add navigation item in `src/components/layout/Sidebar.jsx`
+2. **Install POS dependencies**:
+   ```bash
+   cd pos
+   npm install
+   ```
 
-### Styling Customization
-- Modify `tailwind.config.js` for theme changes
-- Update `src/index.css` for custom component styles
-- Use the `cn()` utility for conditional classes
+3. **Install Manager dependencies**:
+   ```bash
+   cd ../manager
+   npm install
+   ```
 
-### Adding New Features
-- Create reusable components in `src/components/ui/`
-- Add context providers for state management
-- Implement custom hooks for reusable logic
+### Running the Applications
 
-## Browser Support
+**POS Application**:
+```bash
+cd pos
+npm start
+# Open http://localhost:3000
+```
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+**Manager Application**:
+```bash
+cd manager
+npm start
+# Open http://localhost:3001 (or next available port)
+```
+
+## Development
+
+### POS Development
+- Navigate to `pos/` directory
+- Run `npm start` for development
+- Run `npm run build` for production build
+
+### Manager Development
+- Navigate to `manager/` directory
+- Run `npm start` for development
+- Run `npm run build` for production build
+
+## Features Overview
+
+### POS System
+- **Authentication**: Secure login with multiple options
+- **Product Management**: Search, filter, and manage inventory
+- **Sales Processing**: Add items to cart, process payments
+- **Transaction History**: View and manage past sales
+- **User Management**: Profile settings and preferences
+
+### Manager Dashboard
+- **Business Analytics**: Real-time business metrics
+- **Inventory Management**: Stock tracking and alerts
+- **Sales Management**: Sales reports and analytics
+- **Team Management**: Staff and role management
+- **AI Features**: 
+  - AI Assistant for business insights
+  - AI Analytics for predictions
+  - Smart Product Categorization
+- **Settings**: System configuration and preferences
+
+## Architecture
+
+Both applications follow modern React patterns:
+- **Component-based architecture**
+- **Hooks for state management**
+- **Context API for global state**
+- **Responsive design with Tailwind CSS**
+- **Modular component structure**
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
+2. Create a feature branch for your changes
+3. Make your changes in the appropriate application directory
+4. Test thoroughly
 5. Submit a pull request
 
 ## License
 
-This project is licensed under the MIT License.
+This project is part of the Stello business management system.
 
 ## Support
 
-For support and questions, please open an issue in the repository. 
+For support or questions:
+- Check the individual README files in `pos/` and `manager/` directories
+- Review the component documentation
+- Test both applications thoroughly before deployment 
