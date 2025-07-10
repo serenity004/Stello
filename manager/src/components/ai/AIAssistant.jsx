@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Zap, X, Sparkles, TrendingUp, Package, AlertTriangle, DollarSign, Users, Calendar, Target, BarChart3 } from 'lucide-react';
 import Button from '../ui/Button';
+import Modal from '../ui/Modal';
 
 const AIAssistant = ({ isOpen, onClose }) => {
   const [messages, setMessages] = useState([
@@ -198,111 +199,93 @@ const AIAssistant = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl h-[80vh] max-h-[800px] min-h-[600px] flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-neutral-200">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-secondary-800">AI Business Assistant</h3>
-              <p className="text-xs text-secondary-500">Powered by Advanced AI</p>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="AI Business Assistant"
+      size="md"
+      className="max-h-[90vh] overflow-y-auto"
+    >
+      {/* Header content is now handled by Modal */}
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto space-y-4 min-h-0 mb-4" style={{ maxHeight: '40vh' }}>
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div
+              className={`max-w-[90%] sm:max-w-[85%] rounded-lg p-3 ${
+                message.type === 'user'
+                  ? 'bg-primary-500 text-white'
+                  : 'bg-neutral-100 text-secondary-800'
+              }`}
+            >
+              <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+              <p className="text-xs opacity-70 mt-2">
+                {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-neutral-100 rounded-full transition-colors"
-          >
-            <X className="w-5 h-5 text-secondary-500" />
-          </button>
-        </div>
-
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div
-                className={`max-w-[90%] sm:max-w-[85%] rounded-lg p-3 ${
-                  message.type === 'user'
-                    ? 'bg-primary-500 text-white'
-                    : 'bg-neutral-100 text-secondary-800'
-                }`}
-              >
-                <p className="text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
-                <p className="text-xs opacity-70 mt-2">
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
+        ))}
+        {isTyping && (
+          <div className="flex justify-start">
+            <div className="bg-neutral-100 rounded-lg p-3">
+              <div className="flex space-x-1">
+                <div className="w-2 h-2 bg-secondary-400 rounded-full animate-bounce"></div>
+                <div className="w-2 h-2 bg-secondary-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-2 h-2 bg-secondary-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
               </div>
-            </div>
-          ))}
-          
-          {isTyping && (
-            <div className="flex justify-start">
-              <div className="bg-neutral-100 rounded-lg p-3">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-secondary-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-secondary-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-secondary-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          <div ref={messagesEndRef} />
-        </div>
-
-        {/* Quick Actions */}
-        {messages.length === 1 && (
-          <div className="p-4 border-t border-neutral-200">
-            <p className="text-sm font-medium text-secondary-700 mb-3">Quick Analysis Options:</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {quickActions.map((action, index) => {
-                const Icon = action.icon;
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleQuickAction(action.prompt)}
-                    className="flex items-center space-x-2 p-2 text-xs bg-neutral-50 hover:bg-neutral-100 rounded-lg transition-colors text-secondary-700"
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span>{action.title}</span>
-                  </button>
-                );
-              })}
             </div>
           </div>
         )}
-
-        {/* Input */}
-        <div className="p-4 border-t border-neutral-200">
-          <div className="flex space-x-2">
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Ask me anything about your business performance..."
-              className="flex-1 px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
-              disabled={isTyping}
-            />
-            <Button
-              onClick={handleSendMessage}
-              disabled={!inputValue.trim() || isTyping}
-              size="sm"
-              variant="primary"
-              className="flex-shrink-0"
-            >
-              <Send className="w-4 h-4" />
-            </Button>
+        <div ref={messagesEndRef} />
+      </div>
+      {/* Quick Actions */}
+      {messages.length === 1 && (
+        <div className="mb-4">
+          <p className="text-sm font-medium text-secondary-700 mb-3">Quick Analysis Options:</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {quickActions.map((action, index) => {
+              const Icon = action.icon;
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleQuickAction(action.prompt)}
+                  className="flex items-center space-x-2 p-2 text-xs bg-neutral-50 hover:bg-neutral-100 rounded-lg transition-colors text-secondary-700"
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{action.title}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
+      )}
+      {/* Input */}
+      <div>
+        <div className="flex space-x-2">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Ask me anything about your business performance..."
+            className="flex-1 px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
+            disabled={isTyping}
+          />
+          <Button
+            onClick={handleSendMessage}
+            disabled={!inputValue.trim() || isTyping}
+            size="sm"
+            variant="primary"
+            className="flex-shrink-0"
+          >
+            <Send className="w-4 h-4" />
+          </Button>
+        </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

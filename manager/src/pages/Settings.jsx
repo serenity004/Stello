@@ -5,7 +5,8 @@ import {
   Shield, 
   Palette,
   Save,
-  DollarSign
+  DollarSign,
+  CheckCircle
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import { useCurrency } from '../contexts/CurrencyContext';
@@ -233,18 +234,21 @@ const Settings = () => {
               <button
                 key={curr.code}
                 onClick={() => updateCurrency(curr.code)}
-                className={`p-3 border rounded-lg text-left transition-colors ${
+                className={`p-3 border-2 rounded-lg text-left transition-colors flex items-center justify-between group ${
                   currency === curr.code
-                    ? 'border-primary bg-primary/5 text-primary'
-                    : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                    ? 'border-primary-600 bg-primary-50 text-primary-800 shadow-md'
+                    : 'border-gray-200 hover:border-primary-300 hover:bg-primary-50/40'
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium">{curr.name}</div>
-                    <div className="text-sm text-gray-500">{curr.code}</div>
-                  </div>
-                  <div className="text-lg font-semibold">{curr.symbol}</div>
+                <div>
+                  <div className="font-medium">{curr.name}</div>
+                  <div className="text-sm text-gray-500">{curr.code}</div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-lg font-semibold">{curr.symbol}</span>
+                  {currency === curr.code && (
+                    <CheckCircle className="w-5 h-5 text-primary-600 ml-2" />
+                  )}
                 </div>
               </button>
             ))}

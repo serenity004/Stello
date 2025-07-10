@@ -38,7 +38,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-30 bg-gradient-to-r from-neutral-50 to-neutral-100 border-b border-neutral-200 shadow-sm">
+    <header className="sticky top-0 z-30 bg-gradient-to-r from-neutral-50 to-neutral-100 border-b border-neutral-200 shadow-sm relative">
       <div className="flex items-center justify-between h-16 px-4 lg:px-6">
         <div className="flex items-center space-x-4">
           <h1 className={cn(
