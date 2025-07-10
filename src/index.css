@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/90 backdrop-blur-md rounded-xl shadow-lg border border-neutral-200/50;
+  }
+  
+  .sidebar-item {
+    @apply flex items-center space-x-3 p-3 rounded-lg text-secondary-600 hover:text-primary-600 hover:bg-primary-50 transition-all duration-200;
+  }
+  
+  .sidebar-item.active {
+    @apply text-primary-600 bg-primary-50 border-l-4 border-primary-500 shadow-sm;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5;
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-neutral-50 text-secondary-700 border border-neutral-300 px-4 py-2 rounded-lg font-medium transition-colors duration-200 hover:border-neutral-400;
+  }
+  
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm;
+  }
+  
+  .table-row {
+    @apply hover:bg-neutral-50 transition-colors duration-150;
+  }
+  
+  .avatar {
+    @apply flex items-center justify-center bg-gradient-to-br from-secondary-400 to-secondary-500 text-white font-semibold rounded-full shadow-sm;
+  }
+  
+  .dropdown-menu {
+    @apply absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-1 z-50 opacity-0 invisible -translate-y-2 transition-all duration-200;
+  }
+  
+  .dropdown-menu.open {
+    @apply opacity-100 visible translate-y-0;
+  }
+  
+  @media (max-width: 768px) {
+    .sidebar {
+      @apply transform -translate-x-full transition-transform duration-300;
+    }
+    .sidebar.open {
+      @apply translate-x-0;
+    }
+  }
+} 
