@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { CurrencyProvider } from './contexts/CurrencyContext';
+import { SidebarProvider, useSidebar } from './contexts/SidebarContext';
+import { cn } from './utils/cn';
 import LoginForm from './components/auth/LoginForm';
 import Sidebar from './components/layout/Sidebar';
 import Header from './components/layout/Header';
@@ -10,6 +12,8 @@ import Inventory from './pages/Inventory';
 import Sales from './pages/Sales';
 import Team from './pages/Team';
 import Settings from './pages/Settings';
+import Notifications from './pages/Notifications';
+import AI from './pages/AI';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -26,18 +30,25 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AppLayout = () => {
+  const { isCollapsed } = useSidebar();
+  
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden lg:pl-64">
+      <div className={cn(
+        "flex-1 flex flex-col overflow-hidden transition-all duration-300",
+        isCollapsed ? "lg:pl-16" : "lg:pl-64"
+      )}>
         <Header />
-        <main className="flex-1 overflow-y-auto bg-gray-50">
+        <main className="flex-1 overflow-y-auto bg-gradient-to-br from-neutral-50 to-neutral-100">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/team" element={<Team />} />
+            <Route path="/ai" element={<AI />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/notifications" element={<Notifications />} />
           </Routes>
         </main>
       </div>
@@ -49,16 +60,18 @@ const App = () => {
   return (
     <AuthProvider>
       <CurrencyProvider>
-        <Router>
-          <Routes>
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/*" element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </Router>
+        <SidebarProvider>
+          <Router>
+            <Routes>
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/*" element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </Router>
+        </SidebarProvider>
       </CurrencyProvider>
     </AuthProvider>
   );

@@ -6,24 +6,26 @@ import {
   ShoppingCart, 
   Users, 
   Settings,
-  ChevronLeft,
   Menu,
-  X
+  X,
+  Zap
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useSidebar } from '../../contexts/SidebarContext';
 import { cn } from '../../utils/cn';
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
+  const { isCollapsed, toggleSidebar } = useSidebar();
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
     { name: 'Inventory', href: '/inventory', icon: Package },
     { name: 'Sales', href: '/sales', icon: ShoppingCart },
     { name: 'Team', href: '/team', icon: Users },
+    { name: 'AI Features', href: '/ai', icon: Zap },
   ];
 
   const isActive = (href) => {
@@ -45,7 +47,7 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div className={cn(
-        'fixed inset-y-0 left-0 z-40 bg-white border-r border-neutral-200 transition-all duration-300',
+        'fixed inset-y-0 left-0 z-40 bg-gradient-to-r from-neutral-50 to-neutral-100 border-r border-neutral-200 transition-all duration-300',
         isCollapsed ? 'w-16' : 'w-64',
         'lg:translate-x-0',
         isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
@@ -61,15 +63,6 @@ const Sidebar = () => {
                 <span className="text-xl font-bold text-secondary-800">Stello</span>
               )}
             </div>
-            <button
-              className="hidden lg:block p-1 rounded-md hover:bg-primary-100 text-secondary-600 hover:text-secondary-800 transition-colors"
-              onClick={() => setIsCollapsed(!isCollapsed)}
-            >
-              <ChevronLeft className={cn(
-                'w-4 h-4 transition-transform',
-                isCollapsed && 'rotate-180'
-              )} />
-            </button>
           </div>
 
           {/* Navigation */}
@@ -97,6 +90,23 @@ const Sidebar = () => {
             })}
           </nav>
 
+          {/* Collapse Button */}
+          <div className="px-2 py-2 border-t border-neutral-100">
+            <button
+              className={cn(
+                'flex items-center w-full px-3 py-2 rounded-lg font-medium transition-all duration-200',
+                'text-secondary-500 hover:text-secondary-700 hover:bg-neutral-100 border-l-4 border-transparent'
+              )}
+              onClick={toggleSidebar}
+            >
+              <div className="flex flex-col space-y-0.5">
+                <div className="w-4 h-0.5 bg-current rounded"></div>
+                <div className="w-4 h-0.5 bg-current rounded"></div>
+                <div className="w-4 h-0.5 bg-current rounded"></div>
+              </div>
+            </button>
+          </div>
+
           {/* Settings Link */}
           <div className="px-2 py-2 border-t border-neutral-100">
             <Link
@@ -117,14 +127,14 @@ const Sidebar = () => {
           </div>
 
           {/* User Profile */}
-          {!isCollapsed && (
-            <div className="px-4 py-4 border-t border-neutral-200 bg-gradient-to-r from-neutral-50 to-neutral-100">
-              <div className="flex items-center">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-500 flex items-center justify-center shadow-sm">
-                  <span className="text-sm font-medium text-white">
-                    {user?.avatar || 'U'}
-                  </span>
-                </div>
+          <div className="px-4 py-4 border-t border-neutral-200 bg-gradient-to-r from-neutral-50 to-neutral-100">
+            <div className="flex items-center">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-500 flex items-center justify-center shadow-sm">
+                <span className="text-sm font-medium text-white">
+                  {user?.avatar || 'U'}
+                </span>
+              </div>
+              {!isCollapsed && (
                 <div className="ml-3">
                   <p className="text-sm font-medium text-secondary-800">
                     {user?.name || 'User'}
@@ -133,9 +143,9 @@ const Sidebar = () => {
                     {user?.role || 'User'}
                   </p>
                 </div>
-              </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </>

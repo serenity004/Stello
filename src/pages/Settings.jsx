@@ -29,12 +29,12 @@ const Settings = () => {
   const ProfileTab = () => (
     <div className="space-y-6">
       <div className="flex items-center space-x-4">
-        <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
-          <span className="text-gray-700 font-semibold text-xl">JD</span>
+        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-500 flex items-center justify-center shadow-sm">
+          <span className="text-white font-semibold text-xl">JD</span>
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-secondary">John Doe</h3>
-          <p className="text-gray-500">john.doe@stello.com</p>
+          <h3 className="text-lg font-semibold text-secondary-800">John Doe</h3>
+          <p className="text-secondary-500">john.doe@stello.com</p>
           <Button variant="secondary" size="sm" className="mt-2">
             Change Photo
           </Button>
@@ -43,35 +43,35 @@ const Settings = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">First Name</label>
           <input 
             type="text" 
             defaultValue="John"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">Last Name</label>
           <input 
             type="text" 
             defaultValue="Doe"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">Email</label>
           <input 
             type="email" 
             defaultValue="john.doe@stello.com"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">Phone</label>
           <input 
             type="tel" 
             defaultValue="+1 (555) 123-4567"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -88,10 +88,10 @@ const Settings = () => {
   const NotificationsTab = () => (
     <div className="space-y-6">
       <div className="space-y-4">
-        <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+        <div className="flex items-center justify-between p-4 border border-neutral-200 rounded-lg">
           <div>
-            <h4 className="font-medium text-secondary">Email Notifications</h4>
-            <p className="text-sm text-gray-500">Receive notifications via email</p>
+            <h4 className="font-medium text-secondary-800">Email Notifications</h4>
+            <p className="text-sm text-secondary-500">Receive notifications via email</p>
           </div>
           <label className="relative inline-flex items-center cursor-pointer">
             <input 
@@ -100,14 +100,14 @@ const Settings = () => {
               onChange={(e) => setNotifications({...notifications, email: e.target.checked})}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
           </label>
         </div>
         
-        <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+        <div className="flex items-center justify-between p-4 border border-neutral-200 rounded-lg">
           <div>
-            <h4 className="font-medium text-secondary">Push Notifications</h4>
-            <p className="text-sm text-gray-500">Receive push notifications in browser</p>
+            <h4 className="font-medium text-secondary-800">Push Notifications</h4>
+            <p className="text-sm text-secondary-500">Receive push notifications in browser</p>
           </div>
           <label className="relative inline-flex items-center cursor-pointer">
             <input 
@@ -116,14 +116,14 @@ const Settings = () => {
               onChange={(e) => setNotifications({...notifications, push: e.target.checked})}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
           </label>
         </div>
         
-        <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+        <div className="flex items-center justify-between p-4 border border-neutral-200 rounded-lg">
           <div>
-            <h4 className="font-medium text-secondary">SMS Notifications</h4>
-            <p className="text-sm text-gray-500">Receive notifications via SMS</p>
+            <h4 className="font-medium text-secondary-800">SMS Notifications</h4>
+            <p className="text-sm text-secondary-500">Receive notifications via SMS</p>
           </div>
           <label className="relative inline-flex items-center cursor-pointer">
             <input 
@@ -132,7 +132,7 @@ const Settings = () => {
               onChange={(e) => setNotifications({...notifications, sms: e.target.checked})}
               className="sr-only peer"
             />
-            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-500/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-500"></div>
           </label>
         </div>
       </div>
@@ -142,23 +142,23 @@ const Settings = () => {
   const SecurityTab = () => (
     <div className="space-y-6">
       <div className="space-y-4">
-        <div className="p-4 border border-gray-200 rounded-lg">
-          <h4 className="font-medium text-secondary mb-2">Change Password</h4>
+        <div className="p-4 border border-neutral-200 rounded-lg">
+          <h4 className="font-medium text-secondary-800 mb-2">Change Password</h4>
           <div className="space-y-3">
             <input 
               type="password" 
               placeholder="Current Password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <input 
               type="password" 
               placeholder="New Password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <input 
               type="password" 
               placeholder="Confirm New Password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <Button variant="primary" size="sm">
               Update Password
@@ -166,9 +166,9 @@ const Settings = () => {
           </div>
         </div>
         
-        <div className="p-4 border border-gray-200 rounded-lg">
-          <h4 className="font-medium text-secondary mb-2">Two-Factor Authentication</h4>
-          <p className="text-sm text-gray-500 mb-3">Add an extra layer of security to your account</p>
+        <div className="p-4 border border-neutral-200 rounded-lg">
+          <h4 className="font-medium text-secondary-800 mb-2">Two-Factor Authentication</h4>
+          <p className="text-sm text-secondary-500 mb-3">Add an extra layer of security to your account</p>
           <Button variant="secondary" size="sm">
             Enable 2FA
           </Button>
@@ -180,24 +180,24 @@ const Settings = () => {
   const AppearanceTab = () => (
     <div className="space-y-6">
       <div className="space-y-4">
-        <div className="p-4 border border-gray-200 rounded-lg">
-          <h4 className="font-medium text-secondary mb-2">Theme</h4>
+        <div className="p-4 border border-neutral-200 rounded-lg">
+          <h4 className="font-medium text-secondary-800 mb-2">Theme</h4>
           <div className="flex space-x-3">
-            <button className="px-4 py-2 border border-primary text-primary rounded-md">
+            <button className="px-4 py-2 border border-primary-500 text-primary-600 rounded-md">
               Light
             </button>
-            <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md">
+            <button className="px-4 py-2 border border-neutral-300 text-secondary-700 rounded-md">
               Dark
             </button>
-            <button className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md">
+            <button className="px-4 py-2 border border-neutral-300 text-secondary-700 rounded-md">
               Auto
             </button>
           </div>
         </div>
         
-        <div className="p-4 border border-gray-200 rounded-lg">
-          <h4 className="font-medium text-secondary mb-2">Language</h4>
-          <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+        <div className="p-4 border border-neutral-200 rounded-lg">
+          <h4 className="font-medium text-secondary-800 mb-2">Language</h4>
+          <select className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
             <option>English</option>
             <option>Spanish</option>
             <option>French</option>
@@ -279,9 +279,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold text-secondary">Settings</h1>
-      
+    <div className="p-4 lg:p-6 space-y-4 lg:space-y-6">
       <div className="flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
         {/* Sidebar */}
         <div className="lg:w-64">
@@ -294,8 +292,8 @@ const Settings = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                     activeTab === tab.id
-                      ? 'bg-primary text-white'
-                      : 'text-gray-700 hover:text-primary hover:bg-primary/10'
+                      ? 'bg-primary-600 text-white shadow-sm'
+                      : 'text-secondary-700 hover:text-primary-600 hover:bg-primary-50 border border-transparent hover:border-primary-200'
                   }`}
                 >
                   <Icon className="w-4 h-4 mr-3" />

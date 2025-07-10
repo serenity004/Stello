@@ -9,14 +9,19 @@ import {
   UserPlus,
   Plus,
   FileText,
-  Download
+  Download,
+  Zap,
+  Sparkles,
+  Lightbulb
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { cn } from '../utils/cn';
 import { useCurrency } from '../contexts/CurrencyContext';
 
 const Dashboard = () => {
   const { formatCurrency } = useCurrency();
+  const navigate = useNavigate();
   
   const summaryCards = [
     {
@@ -25,8 +30,8 @@ const Dashboard = () => {
       change: '+12%',
       changeType: 'positive',
       icon: Package,
-      color: 'bg-blue-100',
-      iconColor: 'text-primary'
+      color: 'bg-gradient-to-br from-primary-100 to-primary-200',
+      iconColor: 'text-primary-600'
     },
     {
       title: 'Monthly Sales',
@@ -34,8 +39,8 @@ const Dashboard = () => {
       change: '+8%',
       changeType: 'positive',
       icon: ShoppingCart,
-      color: 'bg-green-100',
-      iconColor: 'text-success'
+      color: 'bg-gradient-to-br from-success-100 to-success-200',
+      iconColor: 'text-success-600'
     },
     {
       title: 'Profit',
@@ -43,8 +48,8 @@ const Dashboard = () => {
       change: '-2%',
       changeType: 'negative',
       icon: TrendingUp,
-      color: 'bg-yellow-100',
-      iconColor: 'text-warning'
+      color: 'bg-gradient-to-br from-warning-100 to-warning-200',
+      iconColor: 'text-warning-600'
     },
     {
       title: 'Out of Stock',
@@ -52,8 +57,8 @@ const Dashboard = () => {
       change: 'Needs attention',
       changeType: 'warning',
       icon: AlertTriangle,
-      color: 'bg-red-100',
-      iconColor: 'text-danger'
+      color: 'bg-gradient-to-br from-danger-100 to-danger-200',
+      iconColor: 'text-danger-600'
     }
   ];
 
@@ -111,18 +116,42 @@ const Dashboard = () => {
     }
   ];
 
+  const aiInsights = [
+    {
+      title: 'Sales Forecast',
+      description: 'Expected 12% increase in sales next month',
+      icon: TrendingUp,
+      color: 'text-success',
+      action: 'View Details'
+    },
+    {
+      title: 'Inventory Alert',
+      description: '4 products need immediate reordering',
+      icon: AlertTriangle,
+      color: 'text-warning',
+      action: 'Reorder Now'
+    },
+    {
+      title: 'Profit Optimization',
+      description: 'Electronics category shows highest profit margins',
+      icon: Lightbulb,
+      color: 'text-primary',
+      action: 'Optimize Pricing'
+    }
+  ];
+
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 lg:p-6 space-y-4 lg:space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
         {summaryCards.map((card, index) => {
           const Icon = card.icon;
           return (
             <div key={index} className="glass-card p-6 rounded-xl">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-500">{card.title}</p>
-                  <h3 className="text-2xl font-bold text-secondary mt-1">{card.value}</h3>
+                  <p className="text-sm font-medium text-secondary-500">{card.title}</p>
+                  <h3 className="text-2xl font-bold text-secondary-800 mt-1">{card.value}</h3>
                   <p className={cn(
                     "text-xs mt-1 flex items-center",
                     card.changeType === 'positive' ? 'text-success' : 
@@ -148,7 +177,7 @@ const Dashboard = () => {
       </div>
 
       {/* Sales Chart and Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 lg:gap-6">
         <div className="lg:col-span-2 glass-card p-6 rounded-xl">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-secondary">Sales Performance</h2>
@@ -158,8 +187,8 @@ const Dashboard = () => {
               <Button size="sm" variant="secondary">Daily</Button>
             </div>
           </div>
-          <div className="h-64 bg-gray-50 rounded-lg border border-gray-200 flex items-center justify-center">
-            <div className="text-center text-gray-400">
+          <div className="h-64 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg border border-neutral-200 flex items-center justify-center">
+            <div className="text-center text-secondary-400">
               <TrendingUp className="w-12 h-12 mx-auto mb-2" />
               <p>Sales chart will appear here</p>
             </div>
@@ -190,21 +219,21 @@ const Dashboard = () => {
       </div>
 
       {/* Recent Activity & Low Stock */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6">
         {/* Recent Activity */}
         <div className="glass-card p-6 rounded-xl">
           <h2 className="text-lg font-semibold text-secondary mb-4">Recent Activity</h2>
           <div className="space-y-4">
             {recentActivities.map((activity, index) => (
               <div key={index} className="flex items-start">
-                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-                  <span className="text-gray-700 font-medium text-sm">{activity.avatar}</span>
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-secondary-400 to-secondary-500 flex items-center justify-center mr-3 shadow-sm">
+                  <span className="text-white font-medium text-sm">{activity.avatar}</span>
                 </div>
                 <div>
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-medium text-secondary-800">
                     {activity.user} {activity.action}
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">{activity.time}</p>
+                  <p className="text-xs text-secondary-500 mt-1">{activity.time}</p>
                 </div>
               </div>
             ))}
@@ -263,6 +292,52 @@ const Dashboard = () => {
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      {/* AI Insights */}
+      <div className="glass-card p-6 rounded-xl">
+        <div className="flex items-center space-x-3 mb-6">
+          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
+            <Zap className="w-4 h-4 text-white" />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-secondary">AI Insights</h2>
+            <p className="text-sm text-secondary-500">Powered by artificial intelligence</p>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {aiInsights.map((insight, index) => {
+            const Icon = insight.icon;
+            return (
+              <div key={index} className="p-4 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg border border-neutral-200">
+                <div className="flex items-center space-x-3 mb-3">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm`}>
+                    <Icon className={`w-5 h-5 ${insight.color}`} />
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-secondary-800">{insight.title}</h3>
+                    <p className="text-sm text-secondary-600">{insight.description}</p>
+                  </div>
+                </div>
+                <Button variant="ghost" size="sm" className="text-xs">
+                  {insight.action}
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+        
+        <div className="mt-4 flex items-center justify-center">
+          <Button 
+            variant="secondary" 
+            className="flex items-center space-x-2"
+            onClick={() => navigate('/ai')}
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>Explore More AI Features</span>
+          </Button>
         </div>
       </div>
     </div>

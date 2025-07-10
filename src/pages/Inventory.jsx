@@ -76,10 +76,9 @@ const Inventory = () => {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 lg:p-6 space-y-4 lg:space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
-        <h1 className="text-2xl font-bold text-secondary">Inventory</h1>
         <div className="flex space-x-2">
           <Button variant="secondary" size="sm">
             <Download className="w-4 h-4 mr-1" />
@@ -101,13 +100,13 @@ const Inventory = () => {
       </div>
 
       {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">Category</label>
           <select 
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
             {categories.map(category => (
               <option key={category} value={category}>{category}</option>
@@ -115,11 +114,11 @@ const Inventory = () => {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Stock Status</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">Stock Status</label>
           <select 
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
             {statusOptions.map(status => (
               <option key={status} value={status}>{status}</option>
@@ -127,11 +126,11 @@ const Inventory = () => {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">Sort By</label>
           <select 
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
             {sortOptions.map(option => (
               <option key={option} value={option}>{option}</option>
@@ -139,9 +138,9 @@ const Inventory = () => {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
+          <label className="block text-sm font-medium text-secondary-700 mb-1">Search</label>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-secondary-400" />
             <Input
               type="text"
               placeholder="Search products..."
@@ -156,66 +155,66 @@ const Inventory = () => {
       {/* Products Table */}
       <div className="glass-card rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-neutral-200 text-sm">
+            <thead className="bg-gradient-to-r from-neutral-50 to-neutral-100">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-secondary-600 uppercase tracking-wider">
                   Product
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-secondary-600 uppercase tracking-wider">
                   SKU
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-secondary-600 uppercase tracking-wider">
                   Quantity
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-secondary-600 uppercase tracking-wider">
                   Cost Price
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-secondary-600 uppercase tracking-wider">
                   Selling Price
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 lg:px-6 py-3 text-left text-xs font-medium text-secondary-600 uppercase tracking-wider">
                   Profit
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-3 lg:px-6 py-3 text-right text-xs font-medium text-secondary-600 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-neutral-200">
               {products.map((product) => {
                 const stockStatus = getStockStatus(product.quantity);
                 return (
                   <tr key={product.id} className="table-row">
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
-                          <img className="h-10 w-10 rounded" src={product.image} alt={product.name} />
+                        <div className="flex-shrink-0 h-8 w-8 lg:h-10 lg:w-10">
+                          <img className="h-8 w-8 lg:h-10 lg:w-10 rounded" src={product.image} alt={product.name} />
                         </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-secondary">{product.name}</div>
-                          <div className="text-sm text-gray-500">{product.category}</div>
+                        <div className="ml-2 lg:ml-4">
+                          <div className="text-sm font-medium text-secondary-800">{product.name}</div>
+                          <div className="text-xs lg:text-sm text-secondary-500">{product.category}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                       {product.sku}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 lg:px-6 py-4 whitespace-nowrap">
                       <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${stockStatus.color}`}>
                         {product.quantity}
                       </span>
                     </td>
-                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                         <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                        {formatCurrency(product.costPrice)}
                      </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                     <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                        {formatCurrency(product.sellingPrice)}
                      </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                     <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                        {formatCurrency(product.profit)}
                      </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td className="px-3 lg:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <Button variant="ghost" size="sm" className="mr-2">
                         <Edit className="w-4 h-4" />
                       </Button>
@@ -233,7 +232,7 @@ const Inventory = () => {
 
       {/* Pagination */}
       <div className="flex items-center justify-between">
-        <div className="text-sm text-gray-700">
+        <div className="text-sm text-secondary-700">
           Showing <span className="font-medium">1</span> to <span className="font-medium">3</span> of{' '}
           <span className="font-medium">24</span> results
         </div>

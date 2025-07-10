@@ -65,34 +65,34 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-neutral-50 to-neutral-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
             <Package className="w-8 h-8 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-secondary mb-2">
+          <h2 className="text-3xl font-bold text-secondary-800 mb-2">
             Welcome to Stello
           </h2>
-          <p className="text-gray-500">
+          <p className="text-secondary-500">
             Sign in to manage your inventory
           </p>
         </div>
         
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {errors.general && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md">
+            <div className="bg-danger-50 border border-danger-200 text-danger-700 px-4 py-3 rounded-md">
               {errors.general}
             </div>
           )}
           
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-medium text-secondary-700 mb-1">
                 Email address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-secondary-400" />
                 <Input
                   id="email"
                   name="email"
@@ -108,11 +108,11 @@ const LoginForm = () => {
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="password" className="block text-sm font-medium text-secondary-700 mb-1">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-secondary-400" />
                 <Input
                   id="password"
                   name="password"
@@ -136,14 +136,14 @@ const LoginForm = () => {
                 type="checkbox"
                 checked={formData.rememberMe}
                 onChange={handleChange}
-                className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                className="h-4 w-4 text-primary-500 focus:ring-primary-500 border-neutral-300 rounded"
               />
-              <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
+              <label htmlFor="rememberMe" className="ml-2 block text-sm text-secondary-700">
                 Remember me
               </label>
             </div>
             <div className="text-sm">
-              <a href="#forgot-password" className="font-medium text-primary hover:text-primary-700">
+              <a href="#forgot-password" className="font-medium text-primary-600 hover:text-primary-700">
                 Forgot password?
               </a>
             </div>
@@ -158,9 +158,9 @@ const LoginForm = () => {
           </Button>
         </form>
         
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-sm text-secondary-500">
           Don't have an account?{' '}
-          <a href="#signup" className="font-medium text-primary hover:text-primary-700">
+          <a href="#signup" className="font-medium text-primary-600 hover:text-primary-700">
             Sign up
           </a>
         </div>

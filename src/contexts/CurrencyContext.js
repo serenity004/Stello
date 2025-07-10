@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 
 const CurrencyContext = createContext();
 
@@ -14,7 +14,7 @@ export const CurrencyProvider = ({ children }) => {
   const [currency, setCurrency] = useState('USD');
   const [currencySymbol, setCurrencySymbol] = useState('$');
 
-  const currencies = [
+  const currencies = useMemo(() => [
     { code: 'USD', symbol: '$', name: 'US Dollar' },
     { code: 'EUR', symbol: '€', name: 'Euro' },
     { code: 'GBP', symbol: '£', name: 'British Pound' },
@@ -26,7 +26,7 @@ export const CurrencyProvider = ({ children }) => {
     { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
     { code: 'BRL', symbol: 'R$', name: 'Brazilian Real' },
     { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' }
-  ];
+  ], []);
 
   useEffect(() => {
     // Load saved currency from localStorage
