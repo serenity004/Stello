@@ -190,7 +190,7 @@ const AI = () => {
               <div key={index} className="p-4 bg-neutral-50 rounded-lg border border-neutral-200">
                 <div className="flex items-center space-x-3 mb-3">
                   <div className="w-10 h-10 bg-gradient-to-br from-primary-100 to-primary-200 rounded-full flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-primary-600" />
+                    <Icon className="w-6 h-6 text-primary-600" />
                   </div>
                   <h3 className="font-medium text-secondary-800">{capability.title}</h3>
                 </div>

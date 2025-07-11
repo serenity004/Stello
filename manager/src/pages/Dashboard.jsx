@@ -168,7 +168,7 @@ const Dashboard = () => {
                   </p>
                 </div>
                 <div className={cn("w-12 h-12 rounded-full flex items-center justify-center", card.color)}>
-                  <Icon className={cn("text-xl", card.iconColor)} />
+                  <Icon className={cn("w-6 h-6", card.iconColor)} />
                 </div>
               </div>
             </div>
@@ -314,7 +314,7 @@ const Dashboard = () => {
               <div key={index} className="p-4 bg-gradient-to-br from-neutral-50 to-neutral-100 rounded-lg border border-neutral-200">
                 <div className="flex items-center space-x-3 mb-3">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center bg-white shadow-sm`}>
-                    <Icon className={`w-5 h-5 ${insight.color}`} />
+                    <Icon className={`w-6 h-6 ${insight.color}`} />
                   </div>
                   <div>
                     <h3 className="font-medium text-secondary-800">{insight.title}</h3>

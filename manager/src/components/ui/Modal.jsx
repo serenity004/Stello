@@ -31,10 +31,10 @@ const Modal = ({
   if (!isOpen) return null;
 
   const sizes = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl'
+    sm: 'max-w-xs',
+    md: 'max-w-sm',
+    lg: 'max-w-md',
+    xl: 'max-w-lg'
   };
 
   return (
@@ -48,7 +48,7 @@ const Modal = ({
         sizes[size],
         className
       )}>
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-secondary">{title}</h3>
           <button
             onClick={onClose}
@@ -57,7 +57,7 @@ const Modal = ({
             <X size={20} />
           </button>
         </div>
-        <div className="p-6">
+        <div className="p-4">
           {children}
         </div>
       </div>

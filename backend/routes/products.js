@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const Product = require('../models/Product');
+const { supabase } = require('../config/database');
 const auth = require('../middleware/auth');
 
 const router = express.Router();
@@ -15,45 +15,33 @@ router.get('/', auth, async (req, res) => {
     const search = req.query.search || '';
     const category = req.query.category || '';
     const status = req.query.status || '';
-
-    const query = {};
-
-    // Search functionality
-    if (search) {
-      query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { sku: { $regex: search, $options: 'i' } },
-        { barcode: { $regex: search, $options: 'i' } }
-      ];
-    }
-
-    // Category filter
-    if (category) {
-      query.category = category;
-    }
-
-    // Status filter
-    if (status) {
-      query.status = status;
-    }
-
     const skip = (page - 1) * limit;
 
-    const products = await Product.find(query)
-      .populate('createdBy', 'name')
-      .populate('lastUpdatedBy', 'name')
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit);
+    let query = supabase
+      .from('products')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false })
+      .range(skip, skip + limit - 1);
 
-    const total = await Product.countDocuments(query);
+    if (search) {
+      query = query.ilike('name', `%${search}%`);
+    }
+    if (category) {
+      query = query.eq('category', category);
+    }
+    if (status) {
+      query = query.eq('status', status);
+    }
+
+    const { data: products, error, count } = await query;
+    if (error) return res.status(400).json({ error: error.message });
 
     res.json({
       products,
       pagination: {
         current: page,
-        pages: Math.ceil(total / limit),
-        total,
+        pages: Math.ceil((count || 0) / limit),
+        total: count || 0,
         limit
       }
     });
@@ -68,20 +56,17 @@ router.get('/', auth, async (req, res) => {
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id)
-      .populate('createdBy', 'name')
-      .populate('lastUpdatedBy', 'name');
-
-    if (!product) {
+    const { data: product, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', req.params.id)
+      .single();
+    if (error || !product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-
     res.json(product);
   } catch (err) {
     console.error(err.message);
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ message: 'Product not found' });
-    }
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -92,10 +77,7 @@ router.get('/:id', auth, async (req, res) => {
 router.post('/', [
   auth,
   body('name', 'Product name is required').not().isEmpty(),
-  body('sku', 'SKU is required').not().isEmpty(),
-  body('price', 'Price must be a positive number').isFloat({ min: 0 }),
-  body('cost', 'Cost must be a positive number').isFloat({ min: 0 }),
-  body('category', 'Category is required').isIn(['Electronics', 'Clothing', 'Groceries', 'Home & Garden', 'Sports', 'Books', 'Other'])
+  body('price', 'Price must be a positive number').isFloat({ min: 0 })
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -103,7 +85,7 @@ router.post('/', [
   }
 
   // Check permissions
-  if (!req.user.permissions.canManageProducts && req.user.role !== 'admin') {
+  if (!req.user.permissions?.canManageProducts && req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Not authorized to manage products' });
   }
 
@@ -120,43 +102,59 @@ router.post('/', [
     maxStock,
     unit,
     supplier,
-    tags
+    tags,
+    status
   } = req.body;
 
   try {
     // Check if SKU already exists
-    const existingProduct = await Product.findOne({ sku });
+    const { data: existingProduct, error: skuError } = await supabase
+      .from('products')
+      .select('id')
+      .eq('sku', sku)
+      .maybeSingle();
+    if (skuError) return res.status(400).json({ error: skuError.message });
     if (existingProduct) {
       return res.status(400).json({ message: 'SKU already exists' });
     }
 
     // Check if barcode already exists
     if (barcode) {
-      const existingBarcode = await Product.findOne({ barcode });
+      const { data: existingBarcode, error: barcodeError } = await supabase
+        .from('products')
+        .select('id')
+        .eq('barcode', barcode)
+        .maybeSingle();
+      if (barcodeError) return res.status(400).json({ error: barcodeError.message });
       if (existingBarcode) {
         return res.status(400).json({ message: 'Barcode already exists' });
       }
     }
 
-    const product = new Product({
-      name,
-      sku,
-      barcode,
-      description,
-      category,
-      price,
-      cost,
-      stock: stock || 0,
-      minStock: minStock || 5,
-      maxStock,
-      unit: unit || 'piece',
-      supplier,
-      tags,
-      createdBy: req.user.id,
-      lastUpdatedBy: req.user.id
-    });
+    const { data: product, error } = await supabase
+      .from('products')
+      .insert([{
+        name,
+        sku,
+        barcode,
+        description,
+        category,
+        price,
+        cost,
+        stock: stock || 0,
+        minStock: minStock || 5,
+        maxStock,
+        unit: unit || 'piece',
+        supplier,
+        tags,
+        status,
+        created_by: req.user.id,
+        last_updated_by: req.user.id
+      }])
+      .select()
+      .single();
 
-    await product.save();
+    if (error) return res.status(400).json({ error: error.message });
 
     res.json({
       message: 'Product created successfully',
@@ -174,8 +172,7 @@ router.post('/', [
 router.put('/:id', [
   auth,
   body('name', 'Product name is required').not().isEmpty(),
-  body('price', 'Price must be a positive number').isFloat({ min: 0 }),
-  body('cost', 'Cost must be a positive number').isFloat({ min: 0 })
+  body('price', 'Price must be a positive number').isFloat({ min: 0 })
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -183,55 +180,28 @@ router.put('/:id', [
   }
 
   // Check permissions
-  if (!req.user.permissions.canManageProducts && req.user.role !== 'admin') {
+  if (!req.user.permissions?.canManageProducts && req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Not authorized to manage products' });
   }
 
-  const {
-    name,
-    description,
-    category,
-    price,
-    cost,
-    minStock,
-    maxStock,
-    unit,
-    supplier,
-    tags,
-    status
-  } = req.body;
+  const updateFields = { ...req.body, last_updated_by: req.user.id };
 
   try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+    const { data: product, error } = await supabase
+      .from('products')
+      .update(updateFields)
+      .eq('id', req.params.id)
+      .select()
+      .single();
+    if (error || !product) {
+      return res.status(404).json({ message: 'Product not found or update failed' });
     }
-
-    // Update fields
-    product.name = name;
-    if (description !== undefined) product.description = description;
-    if (category) product.category = category;
-    product.price = price;
-    product.cost = cost;
-    if (minStock !== undefined) product.minStock = minStock;
-    if (maxStock !== undefined) product.maxStock = maxStock;
-    if (unit) product.unit = unit;
-    if (supplier) product.supplier = supplier;
-    if (tags) product.tags = tags;
-    if (status) product.status = status;
-    product.lastUpdatedBy = req.user.id;
-
-    await product.save();
-
     res.json({
       message: 'Product updated successfully',
       product
     });
   } catch (err) {
     console.error(err.message);
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ message: 'Product not found' });
-    }
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -240,25 +210,20 @@ router.put('/:id', [
 // @desc    Delete a product
 // @access  Private (Admin only)
 router.delete('/:id', auth, async (req, res) => {
-  // Check if user is admin
   if (req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Only admins can delete products' });
   }
-
   try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+    const { data, error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', req.params.id);
+    if (error) {
+      return res.status(404).json({ message: 'Product not found or delete failed' });
     }
-
-    await product.remove();
-
     res.json({ message: 'Product deleted successfully' });
   } catch (err) {
     console.error(err.message);
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ message: 'Product not found' });
-    }
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -268,12 +233,14 @@ router.delete('/:id', auth, async (req, res) => {
 // @access  Private
 router.get('/search/barcode/:barcode', auth, async (req, res) => {
   try {
-    const product = await Product.findOne({ barcode: req.params.barcode });
-    
-    if (!product) {
+    const { data: product, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('barcode', req.params.barcode)
+      .maybeSingle();
+    if (error || !product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-
     res.json(product);
   } catch (err) {
     console.error(err.message);
@@ -286,12 +253,14 @@ router.get('/search/barcode/:barcode', auth, async (req, res) => {
 // @access  Private
 router.get('/search/sku/:sku', auth, async (req, res) => {
   try {
-    const product = await Product.findOne({ sku: req.params.sku.toUpperCase() });
-    
-    if (!product) {
+    const { data: product, error } = await supabase
+      .from('products')
+      .select('*')
+      .eq('sku', req.params.sku.toUpperCase())
+      .maybeSingle();
+    if (error || !product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-
     res.json(product);
   } catch (err) {
     console.error(err.message);
@@ -304,10 +273,14 @@ router.get('/search/sku/:sku', auth, async (req, res) => {
 // @access  Private
 router.get('/low-stock', auth, async (req, res) => {
   try {
-    const products = await Product.find({
-      $expr: { $lte: ['$stock', '$minStock'] }
-    }).sort({ stock: 1 });
-
+    const { data: products, error } = await supabase
+      .from('products')
+      .select('*')
+      .lte('stock', 5) // You can adjust this threshold as needed
+      .order('stock', { ascending: true });
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
     res.json(products);
   } catch (err) {
     console.error(err.message);

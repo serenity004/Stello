@@ -5,6 +5,8 @@ import { CurrencyProvider } from './contexts/CurrencyContext';
 import { SidebarProvider, useSidebar } from './contexts/SidebarContext';
 import { cn } from './utils/cn';
 import LoginForm from './components/auth/LoginForm';
+import SignUpForm from './components/auth/SignUpForm';
+import ForgotPasswordForm from './components/auth/ForgotPasswordForm';
 import Sidebar from './components/layout/Sidebar';
 import Header from './components/layout/Header';
 import Dashboard from './pages/Dashboard';
@@ -64,6 +66,8 @@ const App = () => {
           <Router>
             <Routes>
               <Route path="/login" element={<LoginForm />} />
+              <Route path="/signup" element={<SignUpForm />} />
+              <Route path="/forgot-password" element={<ForgotPasswordForm />} />
               <Route path="/*" element={
                 <ProtectedRoute>
                   <AppLayout />
